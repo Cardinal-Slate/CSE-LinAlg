@@ -15,7 +15,7 @@ TFLAGS := $(CFLAGS) -I$(ARITH)/kernel
 OUT     := build
 HDRS    := include/cse/linalg.h
 SRCS    := $(wildcard src/*.c)
-OBJS    := $(patsubst src/%.c,$(OUT)/%.o,$(SRCS)) $(OUT)/tag.o
+OBJS    := $(patsubst src/%.c,$(OUT)/%.o,$(SRCS))
 DEPLIBS := $(ARITH)/build/libcse-arith.a $(TYPES)/build/libcse-types.a $(DSA)/build/libcse-dsa.a
 
 .PHONY: all check clean lib
@@ -35,9 +35,6 @@ $(OUT)/standalone.stamp: $(HDRS) | $(OUT)
 	  $(CC) $(CFLAGS) -fsyntax-only $(OUT)/one.c || exit 1; done; touch $@
 
 $(OUT)/%.o: src/%.c $(HDRS) | $(OUT)
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-$(OUT)/tag.o: kernel/tag.c $(HDRS) | $(OUT)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 lib: $(OUT)/libcse-linalg.a

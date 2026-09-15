@@ -11,9 +11,9 @@
 static int fails = 0;
 #define CHECK(c, m) do { if (!(c)) { printf("  FAIL %s\n", (m)); fails++; } } while (0)
 
-static slate_psda arena[1024];
+static slate_psda arena[4096];
 static slate_psda *pool;
-static void pool_init(void) { int i; for (i = 0; i < 1023; i++) arena[i].next = &arena[i + 1]; arena[1023].next = 0; pool = &arena[0]; }
+static void pool_init(void) { int i; for (i = 0; i < 4095; i++) arena[i].next = &arena[i + 1]; arena[4095].next = 0; pool = &arena[0]; }
 
 #define S(n) cse_arith_val(&pool, (n), 1)
 static slate_psda *vec(long x, long y) { return cse_vec(&pool, S(x), S(y)); }
